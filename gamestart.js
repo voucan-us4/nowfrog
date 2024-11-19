@@ -10,7 +10,7 @@ window.addEventListener("load", function() {
     loadingScreen.style.flexDirection = "column";
     loadingScreen.style.justifyContent = "center";
     loadingScreen.style.alignItems = "center";
-    loadingScreen.style.backgroundImage = "url('https://us4-ubg.github.io/bg.gif')";
+    loadingScreen.style.backgroundImage = "url('/bg.gif')";
     loadingScreen.style.backgroundSize = "cover";
     loadingScreen.style.color = "gold";
     loadingScreen.style.zIndex = "1000";
@@ -29,7 +29,7 @@ window.addEventListener("load", function() {
     loadingScreen.appendChild(text);
 
     const tipText = document.createElement("p");
-    tipText.textContent = "Now.gg Bypass by frogiee1 - https://frogiesarcade.win";
+    tipText.textContent = "Bypass by frogiee1 - frogiesarcade.win";
     tipText.style.fontSize = "18px";
     tipText.style.fontWeight = "normal";
     tipText.style.marginTop = "10px";
