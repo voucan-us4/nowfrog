@@ -17,7 +17,7 @@ window.addEventListener("load", function() {
     loadingScreen.style.fontFamily = "'Comfortaa', cursive";
 
     const logo = document.createElement("img");
-    logo.src = "https://us4-ubg.github.io/logo.png";
+    logo.src = "/logo.png";
     logo.style.maxWidth = "150px";
     logo.style.marginBottom = "20px";
     loadingScreen.appendChild(logo);
