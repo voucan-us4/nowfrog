@@ -1,67 +1,84 @@
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
+    const userBgColor = localStorage.getItem('backgroundColor') || '#000';
+
     const loadingScreen = document.createElement("div");
     loadingScreen.id = "loadingScreen";
-    loadingScreen.style.position = "fixed";
-    loadingScreen.style.top = "0";
-    loadingScreen.style.left = "0";
-    loadingScreen.style.width = "100%";
-    loadingScreen.style.height = "100%";
-    loadingScreen.style.display = "flex";
-    loadingScreen.style.flexDirection = "column";
-    loadingScreen.style.justifyContent = "center";
-    loadingScreen.style.alignItems = "center";
-    loadingScreen.style.backgroundImage = "url('/storage/images/bg.gif')";
-    loadingScreen.style.backgroundColor = localStorage.getItem('backgroundColor') || '#000';;
-    loadingScreen.style.backgroundSize = "cover";
-    loadingScreen.style.color = "gold";
-    loadingScreen.style.zIndex = "1000";
-    loadingScreen.style.fontFamily = "'Comfortaa', cursive";
+    Object.assign(loadingScreen.style, {
+        position: "fixed",
+        top: "0",
+        left: "0",
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundImage: "url('/storage/images/bg.gif')",
+        backgroundColor: userBgColor,
+        backgroundSize: "cover",
+        color: getTextColor(userBgColor),
+        zIndex: "1000",
+        fontFamily: "'Comfortaa', cursive",
+        backdropFilter: "blur(10px)"
+    });
 
     const logo = document.createElement("img");
-    logo.src = "/storage/images/logo2.png";
-    logo.style.maxWidth = "150px";
-    logo.style.marginBottom = "20px";
-    loadingScreen.appendChild(logo);
+    Object.assign(logo.style, {
+        src: "/storage/images/logo2.png",
+        maxWidth: "150px",
+        marginBottom: "20px",
+        filter: getTextColor(userBgColor) === '#000' ? 'invert(1)' : 'none'
+    });
 
     const text = document.createElement("p");
+    Object.assign(text.style, {
+        fontSize: "32px",
+        fontWeight: "bold",
+        opacity: "0.8"
+    });
     text.textContent = "Loading";
-    text.style.fontSize = "32px";
-    text.style.fontWeight = "bold";
-    loadingScreen.appendChild(text);
 
     const tipText = document.createElement("p");
-    tipText.textContent = "Bypass by frogiee1 - frogiesarcade.win";
-    tipText.style.fontSize = "18px";
-    tipText.style.fontWeight = "normal";
-    tipText.style.marginTop = "10px";
-    tipText.style.textAlign = "center";
-    tipText.style.maxWidth = "80%";
-    loadingScreen.appendChild(tipText);
+    Object.assign(tipText.style, {
+        fontSize: "18px",
+        fontWeight: "normal",
+        marginTop: "10px",
+        textAlign: "center",
+        maxWidth: "80%",
+        opacity: "0.8"
+    });
+    tipText.textContent = "Made by Frogiee1";
 
     const progressBarContainer = document.createElement("div");
-    progressBarContainer.style.width = "80%";
-    progressBarContainer.style.height = "30px";
-    progressBarContainer.style.border = "2px solid gold";
-    progressBarContainer.style.marginTop = "20px";
-    progressBarContainer.style.backgroundColor = "rgba(0, 0, 0, 0.3)";
-    progressBarContainer.style.position = "relative";
-    loadingScreen.appendChild(progressBarContainer);
+    Object.assign(progressBarContainer.style, {
+        width: "80%",
+        height: "10px",
+        borderRadius: "5px",
+        overflow: "hidden",
+        border: `2px solid ${getTextColor(userBgColor)}`,
+        marginTop: "20px",
+        backgroundColor: adjustBrightness(userBgColor, -30),
+        position: "relative",
+        boxShadow: `0 0 10px ${adjustBrightness(userBgColor, 50)}`
+    });
 
     const progressBar = document.createElement("div");
-    progressBar.style.height = "100%";
-    progressBar.style.width = "0%";
-    progressBar.style.backgroundColor = "gold";
-    progressBarContainer.appendChild(progressBar);
+    Object.assign(progressBar.style, {
+        height: "100%",
+        width: "0%",
+        background: `linear-gradient(90deg, ${adjustBrightness(userBgColor, 70)}, ${adjustBrightness(userBgColor, 30)})`,
+        transition: "width 0.2s ease-in-out"
+    });
 
+    progressBarContainer.appendChild(progressBar);
+    loadingScreen.append(logo, text, tipText, progressBarContainer);
     document.body.appendChild(loadingScreen);
 
-    let loadingdots = 3;
-    const loadingdotsmax = 3;
-
+    let loadingDots = 3;
+    const loadingDotsMax = 3;
     const dotInterval = setInterval(() => {
-        text.textContent = "Loading" + ".".repeat(loadingdots);
-        loadingdots--;
-        if (loadingdots < 1) loadingdots = loadingdotsmax;
+        text.textContent = "Loading" + ".".repeat(loadingDots);
+        loadingDots = loadingDots > 0 ? loadingDots - 1 : loadingDotsMax;
     }, 500);
 
     let progress = 0;
@@ -72,9 +89,7 @@ window.addEventListener("load", function() {
         } else {
             clearInterval(progressInterval);
             clearInterval(dotInterval);
-            setTimeout(() => {
-                loadingScreen.remove();
-            }, 1);
+            setTimeout(() => loadingScreen.remove(), 300);
         }
     }, 30);
 });
@@ -83,3 +98,22 @@ const fontLink = document.createElement("link");
 fontLink.rel = "stylesheet";
 fontLink.href = "https://fonts.googleapis.com/css2?family=Comfortaa&display=swap";
 document.head.appendChild(fontLink);
+
+function getTextColor(bgColor) {
+    const r = parseInt(bgColor.slice(1, 3), 16);
+    const g = parseInt(bgColor.slice(3, 5), 16);
+    const b = parseInt(bgColor.slice(5, 7), 16);
+    return (r * 0.299 + g * 0.587 + b * 0.114) > 186 ? '#000' : '#fff';
+}
+
+function adjustBrightness(hex, percent) {
+    let r = parseInt(hex.slice(1, 3), 16);
+    let g = parseInt(hex.slice(3, 5), 16);
+    let b = parseInt(hex.slice(5, 7), 16);
+
+    r = Math.min(255, Math.max(0, r + (r * percent) / 100));
+    g = Math.min(255, Math.max(0, g + (g * percent) / 100));
+    b = Math.min(255, Math.max(0, b + (b * percent) / 100));
+
+    return `rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`;
+}
