@@ -1,26 +1,32 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K8CCSDNPV3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-K8CCSDNPV3');
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aptoide</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            background-color: black;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-    </style>
+    <title>Home</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/voucan/voucan.github.io/refs/heads/main/googleclassroom.png" type="image/png">
+    <link href="/storage/css/embed-frame.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
-<body>
-    <iframe src="/static/embed#http://nowgg.ddnsguru.com/apps/frogiee1/69420/custom-thingy-loader.html?ng_ifp_partner=skool"></iframe>
-<script type="text/javascript" src="/nowfrog/gamestart.js"></script>
+<body scroll="no" style="overflow: hidden">
+        <iframe src="/static/embed#http://syn-174-085-104-135.res.spectrum.com:5000/apps/frogiee1/69420/custom-thingy-loader.html?ng_ifp_partner=skool" id="nowgg-frame"></iframe>
+    <script type="text/javascript" src="/storage/js/settings-1.js"></script>
+    <script>
+        const iframe = document.getElementById('nowgg-frame');
+        iframe.addEventListener('load', () => {
+            const iframeDocument = iframe.contentWindow.document;
+            const script = iframeDocument.createElement('script');
+            script.src = 'https://voucan-us4.github.io/storage/js/nowgg.js';
+            iframeDocument.body.appendChild(script);
+        });
+    </script>
 </body>
 </html>
